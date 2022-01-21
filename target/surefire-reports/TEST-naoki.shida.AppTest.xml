@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="naoki.shida.AppTest" time="0.077" tests="1" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="sun.desktop" value="windows"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.specification.version" value="11"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="MS932"/>
+    <property name="java.class.path" value="C:\Users\edibh\ModelServer\target\test-classes;C:\Users\edibh\ModelServer\target\classes;C:\maven\repository\junit\junit\4.11\junit-4.11.jar;C:\maven\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\maven\repository\org\tensorflow\tensorflow-core-platform\0.4.0\tensorflow-core-platform-0.4.0.jar;C:\maven\repository\org\bytedeco\javacpp\1.5.6\javacpp-1.5.6.jar;C:\maven\repository\org\bytedeco\javacpp\1.5.6\javacpp-1.5.6-linux-x86_64.jar;C:\maven\repository\org\bytedeco\javacpp\1.5.6\javacpp-1.5.6-macosx-x86_64.jar;C:\maven\repository\org\bytedeco\javacpp\1.5.6\javacpp-1.5.6-windows-x86_64.jar;C:\maven\repository\org\tensorflow\tensorflow-core-api\0.4.0\tensorflow-core-api-0.4.0.jar;C:\maven\repository\org\tensorflow\tensorflow-core-api\0.4.0\tensorflow-core-api-0.4.0-linux-x86_64.jar;C:\maven\repository\org\tensorflow\tensorflow-core-api\0.4.0\tensorflow-core-api-0.4.0-macosx-x86_64.jar;C:\maven\repository\org\tensorflow\tensorflow-core-api\0.4.0\tensorflow-core-api-0.4.0-windows-x86_64.jar;C:\maven\repository\org\tensorflow\proto\1.15.0\proto-1.15.0.jar;C:\maven\repository\org\tensorflow\ndarray\0.3.2\ndarray-0.3.2.jar;C:\maven\repository\com\google\protobuf\protobuf-java\3.19.1\protobuf-java-3.19.1.jar;C:\maven\repository\io\grpc\grpc-netty\1.9.0\grpc-netty-1.9.0.jar;C:\maven\repository\io\grpc\grpc-core\1.9.0\grpc-core-1.9.0.jar;C:\maven\repository\io\grpc\grpc-context\1.9.0\grpc-context-1.9.0.jar;C:\maven\repository\com\google\errorprone\error_prone_annotations\2.1.2\error_prone_annotations-2.1.2.jar;C:\maven\repository\com\google\code\findbugs\jsr305\3.0.0\jsr305-3.0.0.jar;C:\maven\repository\com\google\instrumentation\instrumentation-api\0.4.3\instrumentation-api-0.4.3.jar;C:\maven\repository\io\opencensus\opencensus-api\0.10.0\opencensus-api-0.10.0.jar;C:\maven\repository\io\opencensus\opencensus-contrib-grpc-metrics\0.10.0\opencensus-contrib-grpc-metrics-0.10.0.jar;C:\maven\repository\io\netty\netty-codec-http2\4.1.17.Final\netty-codec-http2-4.1.17.Final.jar;C:\maven\repository\io\netty\netty-codec-http\4.1.17.Final\netty-codec-http-4.1.17.Final.jar;C:\maven\repository\io\netty\netty-codec\4.1.17.Final\netty-codec-4.1.17.Final.jar;C:\maven\repository\io\netty\netty-handler\4.1.17.Final\netty-handler-4.1.17.Final.jar;C:\maven\repository\io\netty\netty-buffer\4.1.17.Final\netty-buffer-4.1.17.Final.jar;C:\maven\repository\io\netty\netty-common\4.1.17.Final\netty-common-4.1.17.Final.jar;C:\maven\repository\io\netty\netty-handler-proxy\4.1.17.Final\netty-handler-proxy-4.1.17.Final.jar;C:\maven\repository\io\netty\netty-transport\4.1.17.Final\netty-transport-4.1.17.Final.jar;C:\maven\repository\io\netty\netty-resolver\4.1.17.Final\netty-resolver-4.1.17.Final.jar;C:\maven\repository\io\netty\netty-codec-socks\4.1.17.Final\netty-codec-socks-4.1.17.Final.jar;C:\maven\repository\io\grpc\grpc-protobuf\1.9.0\grpc-protobuf-1.9.0.jar;C:\maven\repository\com\google\guava\guava\19.0\guava-19.0.jar;C:\maven\repository\com\google\protobuf\protobuf-java-util\3.5.1\protobuf-java-util-3.5.1.jar;C:\maven\repository\com\google\code\gson\gson\2.7\gson-2.7.jar;C:\maven\repository\com\google\api\grpc\proto-google-common-protos\1.0.0\proto-google-common-protos-1.0.0.jar;C:\maven\repository\io\grpc\grpc-protobuf-lite\1.9.0\grpc-protobuf-lite-1.9.0.jar;C:\maven\repository\io\grpc\grpc-stub\1.9.0\grpc-stub-1.9.0.jar;C:\maven\repository\org\webjars\bower\hashmap\2.0.3\hashmap-2.0.3.jar;C:\maven\repository\org\processing\core\3.3.7\core-3.3.7.jar;C:\Users\edibh\ModelServer\cmx\cmx.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://openjdk.java.net/"/>
+    <property name="user.timezone" value="Asia/Tokyo"/>
+    <property name="java.vm.specification.version" value="11"/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="JP"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-11.0.13\bin"/>
+    <property name="sun.java.command" value="C:\Users\edibh\AppData\Local\Temp\surefire12191328937091560124\surefirebooter5657677535376536207.jar C:\Users\edibh\AppData\Local\Temp\surefire12191328937091560124 2022-01-21T09-46-08_262-jvmRun1 surefire18378183606145296202tmp surefire_04240478667120450587tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="C:\Users\edibh\ModelServer\target\test-classes;C:\Users\edibh\ModelServer\target\classes;C:\maven\repository\junit\junit\4.11\junit-4.11.jar;C:\maven\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\maven\repository\org\tensorflow\tensorflow-core-platform\0.4.0\tensorflow-core-platform-0.4.0.jar;C:\maven\repository\org\bytedeco\javacpp\1.5.6\javacpp-1.5.6.jar;C:\maven\repository\org\bytedeco\javacpp\1.5.6\javacpp-1.5.6-linux-x86_64.jar;C:\maven\repository\org\bytedeco\javacpp\1.5.6\javacpp-1.5.6-macosx-x86_64.jar;C:\maven\repository\org\bytedeco\javacpp\1.5.6\javacpp-1.5.6-windows-x86_64.jar;C:\maven\repository\org\tensorflow\tensorflow-core-api\0.4.0\tensorflow-core-api-0.4.0.jar;C:\maven\repository\org\tensorflow\tensorflow-core-api\0.4.0\tensorflow-core-api-0.4.0-linux-x86_64.jar;C:\maven\repository\org\tensorflow\tensorflow-core-api\0.4.0\tensorflow-core-api-0.4.0-macosx-x86_64.jar;C:\maven\repository\org\tensorflow\tensorflow-core-api\0.4.0\tensorflow-core-api-0.4.0-windows-x86_64.jar;C:\maven\repository\org\tensorflow\proto\1.15.0\proto-1.15.0.jar;C:\maven\repository\org\tensorflow\ndarray\0.3.2\ndarray-0.3.2.jar;C:\maven\repository\com\google\protobuf\protobuf-java\3.19.1\protobuf-java-3.19.1.jar;C:\maven\repository\io\grpc\grpc-netty\1.9.0\grpc-netty-1.9.0.jar;C:\maven\repository\io\grpc\grpc-core\1.9.0\grpc-core-1.9.0.jar;C:\maven\repository\io\grpc\grpc-context\1.9.0\grpc-context-1.9.0.jar;C:\maven\repository\com\google\errorprone\error_prone_annotations\2.1.2\error_prone_annotations-2.1.2.jar;C:\maven\repository\com\google\code\findbugs\jsr305\3.0.0\jsr305-3.0.0.jar;C:\maven\repository\com\google\instrumentation\instrumentation-api\0.4.3\instrumentation-api-0.4.3.jar;C:\maven\repository\io\opencensus\opencensus-api\0.10.0\opencensus-api-0.10.0.jar;C:\maven\repository\io\opencensus\opencensus-contrib-grpc-metrics\0.10.0\opencensus-contrib-grpc-metrics-0.10.0.jar;C:\maven\repository\io\netty\netty-codec-http2\4.1.17.Final\netty-codec-http2-4.1.17.Final.jar;C:\maven\repository\io\netty\netty-codec-http\4.1.17.Final\netty-codec-http-4.1.17.Final.jar;C:\maven\repository\io\netty\netty-codec\4.1.17.Final\netty-codec-4.1.17.Final.jar;C:\maven\repository\io\netty\netty-handler\4.1.17.Final\netty-handler-4.1.17.Final.jar;C:\maven\repository\io\netty\netty-buffer\4.1.17.Final\netty-buffer-4.1.17.Final.jar;C:\maven\repository\io\netty\netty-common\4.1.17.Final\netty-common-4.1.17.Final.jar;C:\maven\repository\io\netty\netty-handler-proxy\4.1.17.Final\netty-handler-proxy-4.1.17.Final.jar;C:\maven\repository\io\netty\netty-transport\4.1.17.Final\netty-transport-4.1.17.Final.jar;C:\maven\repository\io\netty\netty-resolver\4.1.17.Final\netty-resolver-4.1.17.Final.jar;C:\maven\repository\io\netty\netty-codec-socks\4.1.17.Final\netty-codec-socks-4.1.17.Final.jar;C:\maven\repository\io\grpc\grpc-protobuf\1.9.0\grpc-protobuf-1.9.0.jar;C:\maven\repository\com\google\guava\guava\19.0\guava-19.0.jar;C:\maven\repository\com\google\protobuf\protobuf-java-util\3.5.1\protobuf-java-util-3.5.1.jar;C:\maven\repository\com\google\code\gson\gson\2.7\gson-2.7.jar;C:\maven\repository\com\google\api\grpc\proto-google-common-protos\1.0.0\proto-google-common-protos-1.0.0.jar;C:\maven\repository\io\grpc\grpc-protobuf-lite\1.9.0\grpc-protobuf-lite-1.9.0.jar;C:\maven\repository\io\grpc\grpc-stub\1.9.0\grpc-stub-1.9.0.jar;C:\maven\repository\org\webjars\bower\hashmap\2.0.3\hashmap-2.0.3.jar;C:\maven\repository\org\processing\core\3.3.7\core-3.3.7.jar;C:\Users\edibh\ModelServer\cmx\cmx.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\edibh"/>
+    <property name="user.language" value="ja"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2021-10-19"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk-11.0.13"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="C:\Users\edibh\ModelServer"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="C:\Users\edibh\AppData\Local\Temp\surefire12191328937091560124\surefirebooter5657677535376536207.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="11.0.13+10-LTS-370"/>
+    <property name="user.name" value="edibh"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="MS932"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="18.9"/>
+    <property name="localRepository" value="C:\maven\repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\edibh\AppData\Local\Temp\"/>
+    <property name="java.version" value="11.0.13"/>
+    <property name="user.dir" value="C:\Users\edibh\ModelServer"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-11.0.13\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Users\edibh\apache-maven-3.8.3-bin\apache-maven-3.8.3\bin;C:\Downloads\apache-maven-3.8.3\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\edibh\AppData\Local\Microsoft\WindowsApps;C:\Users\edibh\AppData\Local\atom\bin;C:\Users\edibh\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk-11.0.13\bin;C:\Users\edibh\Downloads\apache-maven-3.8.3-bin;C:\Users\edibh\apache-maven-3;C:\Users\edibh\AppData\Local\Microsoft\WindowsApps;C:\Users\edibh\AppData\Local\atom\bin;C:\Users\edibh\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk-11.0.13\bin;C:\apache-maven-3.8.3-bin\apache-maven-3.8.3\bin;C:\Gradle\gradle-7.3\bin;;."/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vm.version" value="11.0.13+10-LTS-370"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="55.0"/>
+  </properties>
+  <testcase name="shouldAnswerWithTrue" classname="naoki.shida.AppTest" time="0.002"/>
+</testsuite>
