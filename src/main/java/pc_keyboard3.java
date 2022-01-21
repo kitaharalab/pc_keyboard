@@ -13,6 +13,7 @@ public class pc_keyboard3 extends PApplet {
   boolean[] Pressing = new boolean[65536];
   boolean getRange = false;
   boolean setKeys = false;
+  boolean playable = false;
   boolean first = false;
   boolean octaveUp = false;
   boolean octaveDown = false;
@@ -231,6 +232,7 @@ public class pc_keyboard3 extends PApplet {
         }else {
           noteOnTime = millis();
           Pressing[key] = true;
+          playable = true;
           switch(key) {
             case '2':
             case 'a':
@@ -470,11 +472,12 @@ public class pc_keyboard3 extends PApplet {
           d = 0;
           break;
       }
-      
-      noteOffTime = millis();
-      println("noteOff:" + noteOffTime / 1000 + " seconds");
-      prev_note_len = noteOffTime - noteOnTime;  
-      prev_vel = baseVel;
+      if(playable) {
+        noteOffTime = millis();
+        println("noteOff:" + noteOffTime / 1000 + " seconds");
+        prev_note_len = noteOffTime - noteOnTime;  
+        prev_vel = baseVel;
+      }
       if(key == ' ') {
         octaveUp = false;
       }
