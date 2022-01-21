@@ -80,7 +80,6 @@ public class ModelServer {
     }else {
       div_noteNum = 0;
       interval = 0;
-      prev_note_len = 0.0f;
     }
     
     //ノートナンバーの値
