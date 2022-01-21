@@ -47,7 +47,7 @@ public class ModelServer {
   private static final int milliChange = 1000;
   private FloatNdArray input_matrix = NdArrays.ofFloats(Shape.of(ax1, ax2, ax3));
     
-  private static File file = new File("C:\\Users\\edibh\\model_lstm_128_1000");
+  private static File file = new File("学習済みモデルへの絶対パス");
   private static String strPath = file.getPath();
   private static SavedModelBundle model = SavedModelBundle.load(strPath, "serve");
   
