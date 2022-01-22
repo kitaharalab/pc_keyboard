@@ -173,10 +173,11 @@ public class pc_keyboard3 extends PApplet {
         }
         
       }else {
-        
+        if(blackKeys[i] != 0) {
           fill(255);
           rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
           rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
+        }
       }
  
     
