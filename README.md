@@ -16,8 +16,9 @@ Mavenのインストール方法については以下の通りです。
 
 
 
-pom.xmlにある<groupId>はMavenプロジェクトの作成時に指定したgroupIdと同じになります。
-<artifactId>はMavenプロジェクトの作成時に指定したプロジェクト名になります。
+pom.xmlにあるgroupIdはMavenプロジェクトの作成時に指定したgroupIdと同じになります。
+
+artifactIdはMavenプロジェクトの作成時に指定したプロジェクト名になります。
 
 演奏システムを実行するには、src/main/java にある、”ModelServer.java”, ”pc_keyboard3.java”を同じディレクトリに置き、”pc_keyboard3.java”を実行します。
 
