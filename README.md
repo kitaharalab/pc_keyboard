@@ -16,6 +16,9 @@ Mavenのインストール方法については以下の通りです。
 
 
 
+pom.xmlにある<groupId>はMavenプロジェクトの作成時に指定したgroupIdと同じになります。
+<artifactId>はMavenプロジェクトの作成時に指定したプロジェクト名になります。
+
 演奏システムを実行するには、src/main/java にある、”ModelServer.java”, ”pc_keyboard3.java”を同じディレクトリに置き、”pc_keyboard3.java”を実行します。
 
 予測に使用する学習済みモデルはサンプルを構成する要素がmymodelにありますので、ローカルファイルを作成し、これらの要素を作成したファイルに置くようにしてください。
