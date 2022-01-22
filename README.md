@@ -20,6 +20,10 @@ pom.xmlにあるgroupIdはMavenプロジェクトの作成時に指定したgrou
 
 artifactIdはMavenプロジェクトの作成時に指定したプロジェクト名になります。
 
+pom.xmlのexec-maven-plugin内に、configurationがあります。
+
+この中のadditionalClasspathelemntにはcmx内の各ファイルへの絶対パスを記述します。cmxフォルダをダウンロードしたら、cmx内にあるjarファイルへのパスを各自変更してください。
+
 演奏システムを実行するには、src/main/java にある、”ModelServer.java”, ”pc_keyboard3.java”を同じディレクトリに置き、”pc_keyboard3.java”を実行します。
 
 予測に使用する学習済みモデルはサンプルを構成する要素がmymodelにありますので、ローカルファイルを作成し、これらの要素を作成したファイルに置くようにしてください。
