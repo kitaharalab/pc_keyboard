@@ -30,6 +30,7 @@ public class pc_keyboard3 extends PApplet {
   int left;
   int rectX, rectY, rectW, rectH, keyW;
   int a=0, b=0, c=0, d=0;
+  int number = 0;
   float times = 0.75f;
   float noteOnTime = 0.0f;
   float noteOffTime = 0.0f;
@@ -318,38 +319,41 @@ public class pc_keyboard3 extends PApplet {
               midiSender.sendNoteOn(0, 0, c, baseVel);
               break;
             default:
-              d = notenums[key];
-              //println(d + " " + noteOnTime + " " + noteOffTime + " " + prev_vel + " " + prev_note_len);
+              number = notenums[key];
+              
+              if(octaveUp) {
+                d = number + octave;
+              }else if(octaveDown){
+                if(notenums[key]-octave > 0) {
+                  d = number - octave;
+                }
+              }else {
+                d = number;
+              }
+              
               //ModelServer ms = new ModelServer(d, noteOnTime, noteOffTime, prev_vel, prev_note_len);
               
+              ms.setFeatures(d, noteOnTime, noteOffTime, prev_vel, prev_note_len);
+              /*
               ms.setNoteNumber(d);
               ms.setNoteOnTime(noteOnTime);
               ms.setNoteOffTime(noteOffTime);
               ms.setPrev_velocity(prev_vel);
               ms.setPrev_note_len(prev_note_len);
-              
+              */
               ms.predict();
               output = ms.getOutput();
               baseVel = round(output);
-                            
-              if(octaveUp) {
-                midiSender.sendNoteOn(0, 0, (d+octave), baseVel);
-              }else if(octaveDown) {
-                if(notenums[key]-octave > 0) {
-                  midiSender.sendNoteOn(0, 0, (d-octave), baseVel);
-                }
-              }else {
-                
-                
+              if(baseVel + vel >= 0 && baseVel + vel <= 127) {
                 if(farte) {
                   midiSender.sendNoteOn(0, 0, d, baseVel+vel);
                 }else if(piano) {
                   midiSender.sendNoteOn(0, 0, d, baseVel-vel);
                 }else {
                   midiSender.sendNoteOn(0, 0, d, baseVel);
-                  
                 }
               }
+              
               break;
           }
           
@@ -452,23 +456,25 @@ public class pc_keyboard3 extends PApplet {
           c = 0;
           break;
         default:
-          d = notenums[key];
+          number = notenums[key];
           
           if(octaveUp) {
-            midiSender.sendNoteOff(0, 0, (d+octave), baseVel);
-          }else if(octaveDown) {
+            d = number + octave;
+          }else if(octaveDown){
             if(notenums[key]-octave > 0) {
-              midiSender.sendNoteOff(0, 0, (d-octave), baseVel);
-            }  
+              d = number - octave;
+            }
           }else {
+            d = number;
+          }
+          if(baseVel + vel >= 0 && baseVel + vel <= 127) {
             if(farte) {
               midiSender.sendNoteOff(0, 0, d, baseVel+vel);
             }else if(piano) {
               midiSender.sendNoteOff(0, 0, d, baseVel-vel);
             }else {
               midiSender.sendNoteOff(0, 0, d, baseVel);
-              
-            }
+            }  
           }
           d = 0;
           break;

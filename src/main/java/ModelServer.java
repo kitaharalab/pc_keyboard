@@ -40,7 +40,7 @@ public class ModelServer {
   private float interval;
   private float prev_vel;
   private float prev_note_len;
-  private static final int ax1 = 5888;
+  private static final int ax1 = 1;
   private static final int ax2 = 4;
   private static final int ax3 = 8;
   private static final int data_len = 128;
@@ -135,11 +135,11 @@ public class ModelServer {
     
     
     TFloat32 input_tensor = TFloat32.tensorOf(input_matrix);
-    
+    /*
     Map<String, Tensor> feed_dict = new HashMap<>();
     feed_dict.put("lstm_input", input_tensor);
     model.function("serving_default").call(feed_dict);
-        
+    */    
         
     output = (TFloat32) model.session()
         .runner()
@@ -172,6 +172,14 @@ public class ModelServer {
     return this.prediction;
   }
   
+  public void setFeatures(int n, float noteOn, float noteOff, int vel, float pn_len) {
+    this.noteNum_int = n;
+    this.noteOnTime = noteOn;
+    this.noteOffTime = noteOff;
+    this.prev_vel = vel;
+    this.prev_note_len = pn_len / milliChange;
+  }
+  /*
   public void setNoteNumber(int n) {
     this.noteNum_int = n;
   }
@@ -191,4 +199,5 @@ public class ModelServer {
   public void setPrev_note_len(float pn_len) {
     this.prev_note_len = pn_len / milliChange;
   }
+  */
 }
