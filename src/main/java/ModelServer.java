@@ -47,7 +47,7 @@ public class ModelServer {
   private static final int milliChange = 1000;
   private FloatNdArray input_matrix = NdArrays.ofFloats(Shape.of(ax1, ax2, ax3));
     
-  private static File file = new File("モデルへの絶対パス");
+  private static File file = new File("C:\\Users\\edibh\\ModelServer\\mymodel");
   private static String strPath = file.getPath();
   private static SavedModelBundle model = SavedModelBundle.load(strPath, "serve");
   
@@ -144,6 +144,7 @@ public class ModelServer {
     output = (TFloat32) model.session()
         .runner()
         .feed("serving_default_lstm_input:0", input_tensor)
+        //.feed("serving_default_simple_rnn_1_imput:0", input_tensor);
         .fetch("StatefulPartitionedCall:0")
         .run()
         .get(0);

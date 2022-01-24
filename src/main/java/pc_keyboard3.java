@@ -27,6 +27,7 @@ public class pc_keyboard3 extends PApplet {
   int baseTime = 0;
   int prev_vel = 0;
   int vel = 20;
+  int changed_vel = 0;
   int left;
   int rectX, rectY, rectW, rectH, keyW;
   int a=0, b=0, c=0, d=0;
@@ -54,6 +55,7 @@ public class pc_keyboard3 extends PApplet {
   }
   
   public void setup() {
+    cmx.showMidiOutChooser(null);
     PFont font = createFont("Meiryo", 50);
     textFont(font);
     println("Input chord(C:'1',D:'2',E:'3',F:'4',G:'5',A:'6',B:'7'):");
@@ -79,23 +81,6 @@ public class pc_keyboard3 extends PApplet {
     
         
     if(setKeys) {
-      /*
-      for(int i = 0; i < names.length(); i++) {
-        if(Pressing[names.charAt(i)]) {
-          fill(0);
-          rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
-          fill(255);
-          rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
-        }else {
-          fill(255);
-          if(blackKeys[i] != 0) {
-            rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
-            rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
-          }
-        }
-          
-      }
-      */
       drawPlayingKeys();
       printKey();
     }
@@ -364,19 +349,26 @@ public class pc_keyboard3 extends PApplet {
                 */
                 ms.predict();
                 predict_time = millis();
-                println(predict_time - noteOnTime);
+                println("execute time:" + (predict_time - noteOnTime));
                 output = ms.getOutput();
                 baseVel = round(output);
               }
-              if(baseVel + vel >= 0 && baseVel + vel <= 127) {
-                if(farte) {
-                  midiSender.sendNoteOn(0, 0, d, baseVel+vel);
-                }else if(piano) {
-                  midiSender.sendNoteOn(0, 0, d, baseVel-vel);
-                }else {
-                  midiSender.sendNoteOn(0, 0, d, baseVel);
-                }
+              
+              if(farte) {
+                changed_vel = baseVel + vel;
+              }else if(piano) {
+                changed_vel = baseVel - vel;
+              }else {
+                changed_vel = baseVel;
               }
+              
+              if(changed_vel < 0) {
+                changed_vel = 0;
+              }else if(changed_vel > 127){
+                changed_vel = 127;
+              }
+              
+              midiSender.sendNoteOn(0, 0, d, changed_vel);
               
               break;
           }
