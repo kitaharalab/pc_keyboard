@@ -32,6 +32,7 @@ public class pc_keyboard3 extends PApplet {
   int a=0, b=0, c=0, d=0;
   int number = 0;
   float times = 0.75f;
+  float predict_time = 0.0f;
   float noteOnTime = 0.0f;
   float noteOffTime = 0.0f;
   float prev_note_len = 0.0f;
@@ -69,38 +70,40 @@ public class pc_keyboard3 extends PApplet {
     text("「ALT」キー：弱める", rectX, 110);  
   
     fill(255);
-    rect(rectX, rectY, rectW, rectH);
     keyW = rectW/18;
-    drawLeftKeys();
-    for(int j = 9; j < 18; j++) {
-      drawRightKeys(j);
-    }
     if(setKeys) {
+      rect(rectX, rectY, rectW-keyW*2, rectH);
+      drawLeftKeys();
+      drawRightKeys();
+    }
+    
+        
+    if(setKeys) {
+      /*
       for(int i = 0; i < names.length(); i++) {
-            if(Pressing[names.charAt(i)]) {
-              fill(0);
-              rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
-
-              fill(255);
-              rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
-            }else {
-              fill(255);
-              rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
-              rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
-            }
-          
+        if(Pressing[names.charAt(i)]) {
+          fill(0);
+          rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
+          fill(255);
+          rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
+        }else {
+          fill(255);
+          if(blackKeys[i] != 0) {
+            rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
+            rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
+          }
         }
-
+          
+      }
+      */
       drawPlayingKeys();
       printKey();
     }
     
-    
-    
   }
   
   public void drawLeftKeys() {
-    for(int i = 0; i < 9; i++) {
+    for(int i = 0; i < whiteKeys_1.length(); i++) {
       if(!octaveUp) {
         if(setKeys) {
           if(Pressing[whiteKeys_1.charAt(i)] || Pressing[whiteKeys_2.charAt(i)]) {
@@ -114,39 +117,43 @@ public class pc_keyboard3 extends PApplet {
         fill(255);
         rect(rectX+keyW*i, rectY, keyW, rectH);
       }
-    /*  
-    }else {
-      fill(255);
-      rect(rectX+keyW*i, rectY, keyW, rectH);
-    }
-    */
     }
   }
   
-  public void drawRightKeys(int n) {
-    if(octaveUp) {
-      if(setKeys) {
-        if(Pressing[whiteKeys_1.charAt(n-9)] || Pressing[whiteKeys_2.charAt(n-9)]) {
-          fill(0);
-        }else {
-          fill(255);
+  public void drawRightKeys() {
+    for(int i = whiteKeys_1.length(); i < whiteKeys_1.length() * 2; i++) {
+      if(octaveUp) {
+        if(setKeys) {
+          if(Pressing[whiteKeys_1.charAt(i-9)] || Pressing[whiteKeys_2.charAt(i-9)]) {
+            fill(0);
+          }else {
+            fill(255);
+          }
+          rect(rectX+keyW*(i-2), rectY, keyW, rectH);
         }
-        rect(rectX+keyW*n, rectY, keyW, rectH);
+        
       }
-    }else {
-      fill(255);
-      rect(rectX+keyW*n, rectY, keyW, rectH);
+    }
+    for(int i = whiteKeys_1.length(); i < whiteKeys_1.length() * 2 - 2; i++) {
+      if(!octaveUp) {
+      
+        fill(255);
+        rect(rectX+keyW*i, rectY, keyW, rectH);
+      }
     }
   }
   
   public void drawPlayingKeys() {
   
     fill(255);
+    
+    //names = '567890-^'
+    
     for(int i = 0; i < names.length(); i++) {
     
       if(notenums[names.charAt(i)] != 0) {
         
-        if(octaveUp) {
+          if(octaveUp) {
           
             if(Pressing[names.charAt(i)]) {
               fill(0);
@@ -158,20 +165,20 @@ public class pc_keyboard3 extends PApplet {
               rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
               rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
             }
-        }else {
+          }else {
+          
             if(Pressing[names.charAt(i)]) {
-              fill(0);
-              rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
-
               fill(255);
               rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
+              fill(0);
+              rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
             }else {
               fill(255);
               rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
               rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
             }
-          
-        }
+          }
+        
         
       }else {
         if(blackKeys[i] != 0) {
@@ -182,6 +189,19 @@ public class pc_keyboard3 extends PApplet {
       }
  
     
+    }
+    for(int i = 7; i < 15; i++) {
+      if(notenums[names.charAt(i-7)] != 0) {
+        if(octaveUp) {
+          if(Pressing[names.charAt(i-7)]) {
+            fill(0);
+            rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
+          }else {
+            fill(255);
+            rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
+          }
+        }
+      }
     }
   
   }
@@ -333,17 +353,21 @@ public class pc_keyboard3 extends PApplet {
               
               //ModelServer ms = new ModelServer(d, noteOnTime, noteOffTime, prev_vel, prev_note_len);
               
-              ms.setFeatures(d, noteOnTime, noteOffTime, prev_vel, prev_note_len);
-              /*
-              ms.setNoteNumber(d);
-              ms.setNoteOnTime(noteOnTime);
-              ms.setNoteOffTime(noteOffTime);
-              ms.setPrev_velocity(prev_vel);
-              ms.setPrev_note_len(prev_note_len);
-              */
-              ms.predict();
-              output = ms.getOutput();
-              baseVel = round(output);
+              if(notenums[key] != 0) {
+                ms.setFeatures(d, noteOnTime, noteOffTime, prev_vel, prev_note_len);
+                /*
+                ms.setNoteNumber(d);
+                ms.setNoteOnTime(noteOnTime);
+                ms.setNoteOffTime(noteOffTime);
+                ms.setPrev_velocity(prev_vel);
+                ms.setPrev_note_len(prev_note_len);
+                */
+                ms.predict();
+                predict_time = millis();
+                println(predict_time - noteOnTime);
+                output = ms.getOutput();
+                baseVel = round(output);
+              }
               if(baseVel + vel >= 0 && baseVel + vel <= 127) {
                 if(farte) {
                   midiSender.sendNoteOn(0, 0, d, baseVel+vel);
@@ -378,7 +402,9 @@ public class pc_keyboard3 extends PApplet {
           }
           isNowOn[key] = true;
           Pressing[key] = true;
-          println("chord:" + a + " " + b + " " + c + " melody:" + d + " velocity:" + baseVel);
+          if(notenums[key] != 0) {
+            println("chord:" + a + " " + b + " " + c + " melody:" + d + " velocity:" + baseVel);
+          }
           println("noteOn:" + noteOnTime / 1000);
         }
       }
@@ -476,14 +502,16 @@ public class pc_keyboard3 extends PApplet {
               midiSender.sendNoteOff(0, 0, d, baseVel);
             }  
           }
-          d = 0;
+          
           break;
       }
       if(playable) {
-        noteOffTime = millis();
-        println("noteOff:" + noteOffTime / 1000 + " seconds");
-        prev_note_len = noteOffTime - noteOnTime;  
-        prev_vel = baseVel;
+        if(d != 0) {
+          noteOffTime = millis();
+          println("noteOff:" + noteOffTime / 1000 + " seconds");
+          prev_note_len = noteOffTime - noteOnTime;  
+          prev_vel = baseVel;
+        }
       }
       if(key == ' ') {
         octaveUp = false;
