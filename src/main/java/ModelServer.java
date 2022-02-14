@@ -172,7 +172,7 @@ public class ModelServer {
   public float getOutput() {
     return this.prediction;
   }
-  
+    
   public void setFeatures(int n, float noteOn, float noteOff, int vel, float pn_len) {
     this.noteNum_int = n;
     this.noteOnTime = noteOn;

@@ -2,6 +2,7 @@ import processing.core.*;
 import jp.crestmuse.cmx.commands.*;
 import jp.crestmuse.cmx.amusaj.sp.*;
 import jp.crestmuse.cmx.processing.*;
+import java.util.ArrayList;
 
 public class pc_keyboard3 extends PApplet {  
 
@@ -32,10 +33,14 @@ public class pc_keyboard3 extends PApplet {
   int rectX, rectY, rectW, rectH, keyW;
   int a=0, b=0, c=0, d=0;
   int number = 0;
+  int count;
   float times = 0.75f;
   float predict_time = 0.0f;
   float noteOnTime = 0.0f;
   float noteOffTime = 0.0f;
+  float execTime = 0.0f;
+  float sumExec = 0.0f;
+  float meanExec = 0.0f;
   float prev_note_len = 0.0f;
   float output;
   int[] div = new int[8];
@@ -44,10 +49,12 @@ public class pc_keyboard3 extends PApplet {
   String whiteKeys_1 = "rtyuiop@[";
   String whiteKeys_2 = "fghjkl;:]";
   String pitchName = "";
+  ArrayList<Float> execTL = new ArrayList<Float>();
 
   public void settings() {
     size(1200, 700);
     ms = new ModelServer();
+    
     rectX = 50;
     rectY = 200;
     rectW = 900;
@@ -355,8 +362,11 @@ public class pc_keyboard3 extends PApplet {
               */
               ms.predict();
               predict_time = millis();
-              println("execute time:" + (predict_time - noteOnTime));
+              execTime = predict_time - noteOnTime;
+              println("execute time:" + execTime);
               output = ms.getOutput();
+              execTL.add(execTime);
+              sumExec += execTime;
               baseVel = round(output);
             }              
             if(farte) {
@@ -660,6 +670,24 @@ public class pc_keyboard3 extends PApplet {
     String maxNote = getNoteName(notenums['[']);
     fill(0);
     text("音域：" + minNote + "～" + maxNote, width/2, 50);
+  }
+  
+  public float getStd() {
+    float std = 0.0f;
+    for(int i = 0; i < execTL.size(); i++) {
+      std += pow(execTL.get(i) - meanExec, 2.0f);
+    }
+    std = std / execTL.size();
+    std = sqrt(std);
+    return std;
+  }
+  
+  public void dispose() {
+    meanExec = sumExec / execTL.size();
+    float std = getStd();
+    println("sum of execute time: " + sumExec);
+    println("mean execute time: " + meanExec);
+    println("standard deviation: " + std);
   }
   
   public static void main(String[] args) {
