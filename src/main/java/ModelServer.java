@@ -21,11 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.lang.Math;
 import com.google.protobuf.Internal.LongList;
-/*
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.*;
-*/
 
 public class ModelServer {
 
@@ -49,29 +44,14 @@ public class ModelServer {
     
   private static File file = new File("モデルへの絶対パス");
   private static String strPath = file.getPath();
-  private static SavedModelBundle model = SavedModelBundle.load(strPath, "serve");
-  
-  /*
-  ModelServer(int n, float noteOn, float noteOff, int vel, float pn_len) {
-    noteNum_int = n;
-    noteOnTime = noteOn;
-    noteOffTime = noteOff;
-    prev_vel = vel;
-    prev_note_len = pn_len / milliChange;
-  }
-  */
-  
-  
+  private static SavedModelBundle model = SavedModelBundle.load(strPath, "serve");  
   
   public void predict() {
-    
-    //System.out.println("test load...");
     
     count++;
         
     System.out.println(count);
         
-    
     if(count > 1) {
       //ノートナンバーの差
       div_noteNum = Math.abs(noteNum_int - prev_noteNum);
@@ -87,10 +67,6 @@ public class ModelServer {
     
     //前の音のベロシティ
     float vel_float = prev_vel;
-    
-    
-    
-    
     
     System.out.println("noteNum:" + noteNum_float);
     System.out.println("interval:" + interval + " seconds");
@@ -131,16 +107,15 @@ public class ModelServer {
       input_matrix.setFloat(features.getFloat(i), 0, ax2-1, i);
     }
     
-    float mean = 0.0f;
-    
-    
     TFloat32 input_tensor = TFloat32.tensorOf(input_matrix);
+    
     /*
     Map<String, Tensor> feed_dict = new HashMap<>();
     feed_dict.put("lstm_input", input_tensor);
     model.function("serving_default").call(feed_dict);
     */    
-        
+    
+    //モデルを用いて学習を行う    
     output = (TFloat32) model.session()
         .runner()
         .feed("serving_default_lstm_input:0", input_tensor)
@@ -156,10 +131,7 @@ public class ModelServer {
     /*
     System.out.println(model.metaGraphDef().getSignatureDefMap().get("serving_default"));
      
-    System.out.println(output.getClass().getSimpleName());  
-        
-    mean /= ax2;
-    System.out.println("mean: " + mean);
+    System.out.println(output.getClass().getSimpleName());      
     */
     
     output.close();
@@ -172,7 +144,8 @@ public class ModelServer {
   public float getOutput() {
     return this.prediction;
   }
-    
+  
+  //特徴量を受け取る  
   public void setFeatures(int n, float noteOn, float noteOff, int vel, float pn_len) {
     this.noteNum_int = n;
     this.noteOnTime = noteOn;
@@ -180,25 +153,4 @@ public class ModelServer {
     this.prev_vel = vel;
     this.prev_note_len = pn_len / milliChange;
   }
-  /*
-  public void setNoteNumber(int n) {
-    this.noteNum_int = n;
-  }
-  
-  public void setNoteOnTime(float noteOn) {
-    this.noteOnTime = noteOn;
-  }
-  
-  public void setNoteOffTime(float noteOff) {
-    this.noteOffTime = noteOff;
-  }
-  
-  public void setPrev_velocity(int vel) {
-    this.prev_vel = vel;
-  }
-  
-  public void setPrev_note_len(float pn_len) {
-    this.prev_note_len = pn_len / milliChange;
-  }
-  */
 }

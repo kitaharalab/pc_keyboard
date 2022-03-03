@@ -348,18 +348,9 @@ public class pc_keyboard3 extends PApplet {
             }else {
               d = number;
             }
-             
-            //ModelServer ms = new ModelServer(d, noteOnTime, noteOffTime, prev_vel, prev_note_len);
-              
+               
             if(notenums[key] != 0) {
               ms.setFeatures(d, noteOnTime, noteOffTime, prev_vel, prev_note_len);
-              /*
-              ms.setNoteNumber(d);
-              ms.setNoteOnTime(noteOnTime);
-              ms.setNoteOffTime(noteOffTime);
-              ms.setPrev_velocity(prev_vel);
-              ms.setPrev_note_len(prev_note_len);
-              */
               ms.predict();
               predict_time = millis();
               execTime = predict_time - noteOnTime;
