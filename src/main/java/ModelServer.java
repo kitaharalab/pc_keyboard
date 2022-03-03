@@ -109,11 +109,7 @@ public class ModelServer {
     
     TFloat32 input_tensor = TFloat32.tensorOf(input_matrix);
     
-    /*
-    Map<String, Tensor> feed_dict = new HashMap<>();
-    feed_dict.put("lstm_input", input_tensor);
-    model.function("serving_default").call(feed_dict);
-    */    
+        
     
     //モデルを用いて学習を行う    
     output = (TFloat32) model.session()
