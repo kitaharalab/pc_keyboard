@@ -39,6 +39,17 @@ pom.xmlのexec-maven-plugin内に、configurationがあります。
 
 演奏システムを実行するには、src/main/java にある、”ModelServer.java”, ”pc_keyboard3.java”を同じディレクトリに置き、”pc_keyboard3.java”を実行します。
 
+実行の際はコマンドプロンプトで以下の２文を入力します。
+
+```
+mvn install
+mvn compile exec:java
+```
+
+1文目はリモートリポジトリの情報をローカルリポジトリに更新しています。
+
+2文目はJavaプログラムをコンパイルし、実行しています。
+
 予測に使用する学習済みモデルはサンプルを構成する要素がmymodelにありますので、ローカルファイルを作成し、これらの要素を作成したファイルに置くようにしてください。
 
 
