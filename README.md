@@ -25,9 +25,25 @@ set PATH=%PATH%; "ファイルへの絶対パス"
 
 4.コマンドプロンプトを起動し、mvn -vと入力する。バージョン情報が表示されれば、正しくインストールされている。
 
+# project
+mavenにはプロジェクトというまとまりを作成することで、コンパイルや成果物を一つにまとめたひな形を作ることが出来ます。
+
+今回はこの方法でプログラムを実行します。
+
+「ModelServer」という名前のプロジェクトを作成します。作成するには、以下のコマンドをコマンドプロンプトで入力します。
+
+```
+mvn archetype:create -DgroupId=com.example -DartifactId=ModelServer
+```
+
+実行後、pom.xml、srcディレクトリ、testディレクトリが生成されます。
 
 # pom.xml
 現在編集中
+
+pom.xmlはプロジェクトの構成に関する情報をもつ重要なファイルです。
+
+新しいライブラリを入れる場合には、pom.xmlにライブラリの情報を記述することで、利用可能にします。
 
 pom.xmlにあるgroupIdはMavenプロジェクトの作成時に指定したgroupIdと同じになります。
 
@@ -38,6 +54,17 @@ pom.xmlのexec-maven-plugin内に、configurationがあります。
 この中のadditionalClasspathelemntにはcmx内の各ファイルへの絶対パスを記述します。cmxフォルダをダウンロードしたら、cmx内にあるjarファイルへのパスを各自変更してください。
 
 演奏システムを実行するには、src/main/java にある、”ModelServer.java”, ”pc_keyboard3.java”を同じディレクトリに置き、”pc_keyboard3.java”を実行します。
+
+実行の際はコマンドプロンプトで以下の２文を入力します。
+
+```
+mvn install
+mvn compile exec:java
+```
+
+1文目はリモートリポジトリの情報をローカルリポジトリに更新しています。
+
+2文目はJavaプログラムをコンパイルし、実行しています。
 
 予測に使用する学習済みモデルはサンプルを構成する要素がmymodelにありますので、ローカルファイルを作成し、これらの要素を作成したファイルに置くようにしてください。
 
