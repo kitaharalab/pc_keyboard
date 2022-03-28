@@ -54,7 +54,6 @@ public class pc_keyboard3 extends PApplet {
   public void settings() {
     size(1200, 700);
     ms = new ModelServer();
-    
     rectX = 50;
     rectY = 200;
     rectW = 900;
@@ -66,7 +65,6 @@ public class pc_keyboard3 extends PApplet {
     PFont font = createFont("Meiryo", 50);
     textFont(font);
     println("Input chord(C:'1',D:'2',E:'3',F:'4',G:'5',A:'6',B:'7'):");
-    
   }
   
   public void draw() {
@@ -146,40 +144,32 @@ public class pc_keyboard3 extends PApplet {
   public void drawPlayingKeys() {
   
     fill(255);
-    
     //names = '567890-^'
-    
     for(int i = 0; i < names.length(); i++) {
-    
       if(notenums[names.charAt(i)] != 0) {
-        
-          if(octaveUp) {
-          
-            if(Pressing[names.charAt(i)]) {
-              fill(0);
-              rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
-              fill(255);
-              rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
-            }else {
-              fill(255);
-              rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
-              rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
-            }
+        if(octaveUp) {  
+          if(Pressing[names.charAt(i)]) {
+            fill(0);
+            rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
+            fill(255);
+            rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
           }else {
-          
-            if(Pressing[names.charAt(i)]) {
-              fill(255);
-              rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
-              fill(0);
-              rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
-            }else {
-              fill(255);
-              rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
-              rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
-            }
+            fill(255);
+            rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
+            rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
           }
-        
-        
+        }else {  
+          if(Pressing[names.charAt(i)]) {
+            fill(255);
+            rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
+            fill(0);
+            rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
+          }else {
+            fill(255);
+            rect(rectX+keyW*(times+i), rectY, keyW/2, rectH/2);
+            rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
+          }
+        }
       }else {
         if(blackKeys[i] != 0) {
           fill(255);
@@ -187,8 +177,6 @@ public class pc_keyboard3 extends PApplet {
           rect(rectX+keyW*(times+i+7), rectY, keyW/2, rectH/2);
         }
       }
- 
-    
     }
     for(int i = 7; i < 15; i++) {
       if(notenums[names.charAt(i-7)] != 0) {
@@ -203,7 +191,6 @@ public class pc_keyboard3 extends PApplet {
         }
       }
     }
-  
   }
   
   public void printKey() {
@@ -218,34 +205,16 @@ public class pc_keyboard3 extends PApplet {
     
     if (!isNowOn[key]) {
       if(!setKeys) {
-        note = setBlackKeys();
+        note = getMinBlackKey();
         println(note);
 
         left = note;
-        for(int i = 0; i < div.length; i++) {
-          if(left % 12 == 4 || left % 12 == 11) {
-            div[i] = 1;
-            blackKeys[i] = 0;
-          }else {
-            div[i] = 2;
-            blackKeys[i] = left+1; 
-          }
-          left += div[i];
-        }    
+        decideBlackKeys(left);
         setKeyDisplay(note);
-            
-        for(int i = 0; i < names.length(); i++) {
-          notenums[names.charAt(i)] = blackKeys[i];
-        }
-          
+        setBlackKeys();    
+                  
         setChord();
-            
-        midiSender = new MidiEventSender();
-        MidiOutputModule midiout = cmx.createMidiOut();
-        cmx.addSPModule(midiSender);
-        cmx.addSPModule(midiout);
-        cmx.connect(midiSender, 0, midiout, 0);
-        cmx.startSP();
+        startCmx();    
         setKeys = true;
         Pressing[key] = false;
 
@@ -257,146 +226,25 @@ public class pc_keyboard3 extends PApplet {
           case '2':
           case 'a':
           case 's':
-            switch(key) {
-              case '2':
-                pitchName += "C";
-                break;
-              case 'a':
-                pitchName += "F";
-                break;
-              case 's':
-                pitchName += "G";
-                break;
-            }
-            a = notenums[key];
-            b = a+4;
-            c = a+7;
-            d = 0;
-            if(octaveUp) {
-              a += octave;
-              b += octave;
-              c += octave;
-            }else if(octaveDown) {
-              a -= octave;
-              b -= octave;
-              c -= octave;
-            }
-            midiSender.sendNoteOn(0, 0, a, baseVel);
-            midiSender.sendNoteOn(0, 0, b, baseVel);
-            midiSender.sendNoteOn(0, 0, c, baseVel);
+            noteOnCFG();
             break;
           case 'q':
           case 'w':
           case 'z':
-            switch(key) {
-              case 'q':
-                pitchName += "Dm";
-                break;
-              case 'w':
-                pitchName += "Em";
-                break;
-              case 'z':
-                pitchName += "Am";
-                break;
-            }
-            a = notenums[key];
-            b = a+3;
-            c = a+7;
-            d = 0;
-            if(octaveUp) {
-              a += octave;
-              b += octave;
-              c += octave;
-            }else if(octaveDown) {
-              a -= octave;
-              b -= octave;
-              c -= octave;
-            }
-            
-            midiSender.sendNoteOn(0, 0, a, baseVel);
-            midiSender.sendNoteOn(0, 0, b, baseVel);
-            midiSender.sendNoteOn(0, 0, c, baseVel);
+            noteOnDmEmAm();
             break;
           case 'x':
-            pitchName += "Bm-5";
-            a = notenums[key];
-            b = a+3;
-            c = a+6;
-            d = 0;
-            if(octaveUp) {
-              a += octave;
-              b += octave;
-              c += octave;
-            }else if(octaveDown) {
-              a -= octave;
-              b -= octave;
-              c -= octave;
-            }
-            midiSender.sendNoteOn(0, 0, a, baseVel);
-            midiSender.sendNoteOn(0, 0, b, baseVel);
-            midiSender.sendNoteOn(0, 0, c, baseVel);
+            noteOnBm_5();
             break;
           default:
             number = notenums[key];
-              
-            if(octaveUp) {
-              d = number + octave;
-            }else if(octaveDown){
-              if(notenums[key]-octave > 0) {
-                d = number - octave;
-              }
-            }else {
-              d = number;
-            }
-               
-            if(notenums[key] != 0) {
-              ms.setFeatures(d, noteOnTime, noteOffTime, prev_vel, prev_note_len);
-              ms.predict();
-              predict_time = millis();
-              execTime = predict_time - noteOnTime;
-              println("execute time:" + execTime);
-              output = ms.getOutput();
-              execTL.add(execTime);
-              sumExec += execTime;
-              baseVel = round(output);
-            }              
-            if(farte) {
-              changed_vel = baseVel + vel;
-            }else if(piano) {
-              changed_vel = baseVel - vel;
-            }else {
-              changed_vel = baseVel;
-            }
-              
-            if(changed_vel < 0) {
-              changed_vel = 0;
-            }else if(changed_vel > 127){
-              changed_vel = 127;
-            }
-              
-            midiSender.sendNoteOn(0, 0, d, changed_vel);
-              
+            d = octaveChange(number);  
+            execPrediction();               
+            changed_vel = velChange();                      
+            midiSender.sendNoteOn(0, 0, d, changed_vel);  
             break;
         }          
-      
-        if(key == ' ') {
-          octaveUp = true;
-        }
-        if(key == 'c') {
-          octaveDown = true;
-        }
-        if(key == '1') {
-          farte = true; 
-        }
-        if(Mac) {
-          if(keyCode == CONTROL) {
-            piano = true;
-          }
-        }else {
-          if(keyCode == ALT) {
-            piano = true;
-          }
-        }
+        noteOnEffects();
         isNowOn[key] = true;
         Pressing[key] = true;
         if(notenums[key] != 0) {
@@ -410,95 +258,23 @@ public class pc_keyboard3 extends PApplet {
   public void keyReleased() {
     
     if(setKeys) {
-      
       switch(key) {    
         case '2':
         case 'a':
         case 's':
-          //chord
-          a = notenums[key];
-          b = a+4;
-          c = a+7;
-          if(octaveUp) {
-            a += octave;
-            b += octave;
-            c += octave;
-          }else if(octaveDown) {
-            a -= octave;
-            b -= octave;
-            c -= octave;
-          }
-          midiSender.sendNoteOff(0, 0, a, baseVel);
-          midiSender.sendNoteOff(0, 0, b, baseVel);
-          midiSender.sendNoteOff(0, 0, c, baseVel);
-          a = 0;
-          b = 0;
-          c = 0;
+          noteOffCFG();
           break;
         case 'q':
         case 'w':
         case 'z':
-          a = notenums[key];
-          b = a+3;
-          c = a+7;
-          if(octaveUp) {
-            a += octave;
-            b += octave;
-            c += octave;
-          }else if(octaveDown) {
-            a -= octave;
-            b -= octave;
-            c -= octave;
-          }
-          midiSender.sendNoteOff(0, 0, a, baseVel);
-          midiSender.sendNoteOff(0, 0, b, baseVel);
-          midiSender.sendNoteOff(0, 0, c, baseVel);
-          a = 0;
-          b = 0;
-          c = 0;
+          noteOffDmEmAm();
           break;
         case 'x':
-          a = notenums[key];
-          b = a+3;
-          c = a+6;
-          if(octaveUp) {
-            a += octave;
-            b += octave;
-            c += octave;
-          }else if(octaveDown) {
-            a -= octave;
-            b -= octave;
-            c -= octave;
-          }
-          midiSender.sendNoteOff(0, 0, a, baseVel);
-          midiSender.sendNoteOff(0, 0, b, baseVel);
-          midiSender.sendNoteOff(0, 0, c, baseVel);
-          a = 0;
-          b = 0;
-          c = 0;
+          noteOffBm_5();
           break;
         default:
           number = notenums[key];
-          
-          if(octaveUp) {
-            d = number + octave;
-          }else if(octaveDown){
-            if(notenums[key]-octave > 0) {
-              d = number - octave;
-            }
-          }else {
-            d = number;
-          }
-          if(baseVel + vel >= 0 && baseVel + vel <= 127) {
-            if(farte) {
-              midiSender.sendNoteOff(0, 0, d, baseVel+vel);
-            }else if(piano) {
-              midiSender.sendNoteOff(0, 0, d, baseVel-vel);
-            }else {
-              midiSender.sendNoteOff(0, 0, d, baseVel);
-            }  
-          }
-          
+          midiSender.sendNoteOff(0, 0, d, changed_vel);
           break;
       }
       if(playable) {
@@ -509,25 +285,23 @@ public class pc_keyboard3 extends PApplet {
           prev_vel = baseVel;
         }
       }
-      if(key == ' ') {
-        octaveUp = false;
-      }
-      if(key == 'c') {
-        octaveDown = false;
-      }
-      if(key == '1') {
-        farte = false;
-      }
-      if(keyCode == ALT) {
-        piano = false;
-      }
-      
-      //println("velocity:"+ baseVel);
-      
-      pitchName = "";
+      noteOffEffects();
       isNowOn[key] = false;
       Pressing[key] = false;
     }
+  }
+  
+  public void decideBlackKeys(int left) {
+    for(int i = 0; i < div.length; i++) {
+      if(left % 12 == 4 || left % 12 == 11) {
+        div[i] = 1;
+        blackKeys[i] = 0;
+      }else {
+        div[i] = 2;
+        blackKeys[i] = left+1; 
+      }
+      left += div[i];
+    }    
   }
     
   public void setKeyDisplay(int note) {
@@ -556,6 +330,12 @@ public class pc_keyboard3 extends PApplet {
     notenums[']'] = notenums['['];
   }
   
+  public void setBlackKeys() {
+    for(int i = 0; i < names.length(); i++) {
+      notenums[names.charAt(i)] = blackKeys[i];
+    }
+  }
+  
   public void setChord() {
     notenums['2'] = 48;
     notenums['q'] = 50;
@@ -564,6 +344,247 @@ public class pc_keyboard3 extends PApplet {
     notenums['s'] = 55;
     notenums['z'] = 57;
     notenums['x'] = 59;
+  }
+  
+  public void startCmx() {
+    midiSender = new MidiEventSender();
+    MidiOutputModule midiout = cmx.createMidiOut();
+    cmx.addSPModule(midiSender);
+    cmx.addSPModule(midiout);
+    cmx.connect(midiSender, 0, midiout, 0);
+    cmx.startSP();
+
+  }
+  
+  public void noteOnCFG() {
+    switch(key) {
+      case '2':
+        pitchName += "C";
+        break;
+      case 'a':
+        pitchName += "F";
+        break;
+      case 's':
+        pitchName += "G";
+        break;
+    }
+    a = notenums[key];
+    b = a+4;
+    c = a+7;
+    d = 0;
+    if(octaveUp) {
+      a += octave;
+      b += octave;
+      c += octave;
+    }else if(octaveDown) {
+      a -= octave;
+      b -= octave;
+      c -= octave;
+    }
+    midiSender.sendNoteOn(0, 0, a, baseVel);
+    midiSender.sendNoteOn(0, 0, b, baseVel);
+    midiSender.sendNoteOn(0, 0, c, baseVel);
+  }
+  
+  public void noteOnDmEmAm() {
+    switch(key) {
+      case 'q':
+        pitchName += "Dm";
+        break;
+      case 'w':
+        pitchName += "Em";
+        break;
+      case 'z':
+        pitchName += "Am";
+        break;
+    }
+    a = notenums[key];
+    b = a+3;
+    c = a+7;
+    d = 0;
+    if(octaveUp) {
+      a += octave;
+      b += octave;
+      c += octave;
+    }else if(octaveDown) {
+      a -= octave;
+      b -= octave;
+      c -= octave;
+    }        
+    midiSender.sendNoteOn(0, 0, a, baseVel);
+    midiSender.sendNoteOn(0, 0, b, baseVel);
+    midiSender.sendNoteOn(0, 0, c, baseVel);
+  }
+  
+  public void noteOnBm_5() {
+    pitchName += "Bm-5";
+    a = notenums[key];
+    b = a+3;
+    c = a+6;
+    d = 0;
+    if(octaveUp) {
+      a += octave;
+      b += octave;
+      c += octave;
+    }else if(octaveDown) {
+      a -= octave;
+      b -= octave;
+      c -= octave;
+    }
+    midiSender.sendNoteOn(0, 0, a, baseVel);
+    midiSender.sendNoteOn(0, 0, b, baseVel);
+    midiSender.sendNoteOn(0, 0, c, baseVel);
+  }
+  
+  public int octaveChange(int number) {
+    int d = 0;
+    if(octaveUp) {
+      d = number + octave;
+    }else if(octaveDown){
+      if(notenums[key]-octave > 0) {
+        d = number - octave;
+      }
+    }else {
+      d = number;
+    }
+    return d;
+  }
+  
+  public void noteOffCFG() {
+    //chord
+    a = notenums[key];
+    b = a+4;
+    c = a+7;
+    if(octaveUp) {
+      a += octave;
+      b += octave;
+      c += octave;
+    }else if(octaveDown) {
+      a -= octave;
+      b -= octave;
+      c -= octave;
+    }
+    midiSender.sendNoteOff(0, 0, a, baseVel);
+    midiSender.sendNoteOff(0, 0, b, baseVel);
+    midiSender.sendNoteOff(0, 0, c, baseVel);
+    a = 0;
+    b = 0;
+    c = 0;
+  }
+  
+  public void noteOffDmEmAm() {
+    a = notenums[key];
+    b = a+3;
+    c = a+7;
+    if(octaveUp) {
+      a += octave;
+      b += octave;
+      c += octave;
+    }else if(octaveDown) {
+      a -= octave;
+      b -= octave;
+      c -= octave;
+    }
+    midiSender.sendNoteOff(0, 0, a, baseVel);
+    midiSender.sendNoteOff(0, 0, b, baseVel);
+    midiSender.sendNoteOff(0, 0, c, baseVel);
+    a = 0;
+    b = 0;
+    c = 0;
+  }
+  
+  public void noteOffBm_5() {
+    a = notenums[key];
+    b = a+3;
+    c = a+6;
+    if(octaveUp) {
+      a += octave;
+      b += octave;
+      c += octave;
+    }else if(octaveDown) {
+      a -= octave;
+      b -= octave;
+      c -= octave;
+    }
+    midiSender.sendNoteOff(0, 0, a, baseVel);
+    midiSender.sendNoteOff(0, 0, b, baseVel);
+    midiSender.sendNoteOff(0, 0, c, baseVel);
+    a = 0;
+    b = 0;
+    c = 0;
+  }
+  
+  public void execPrediction() {
+    if(notenums[key] != 0) {
+      ms.setFeatures(d, noteOnTime, noteOffTime, prev_vel, prev_note_len);
+      ms.predict();
+      predict_time = millis();
+      execTime = predict_time - noteOnTime;
+      println("execute time:" + execTime);
+      output = ms.getOutput();
+      execTL.add(execTime);
+      sumExec += execTime;
+      baseVel = round(output);
+    }      
+  }
+  
+  public int velChange() {
+    int changed_vel = 0;
+    if(farte) {
+      changed_vel = baseVel + vel;
+    }else if(piano) {
+      changed_vel = baseVel - vel;
+    }else {
+      changed_vel = baseVel;
+    }
+              
+    if(changed_vel < 0) {
+      changed_vel = 0;
+    }else if(changed_vel > 127){
+      changed_vel = 127;
+    }
+    return changed_vel;
+  }
+  
+  public void noteOnEffects() {
+    if(key == ' ') {
+      octaveUp = true;
+    }
+    if(key == 'c') {
+      octaveDown = true;
+    }
+    if(key == '1') {
+      farte = true; 
+    }
+    if(Mac) {
+      if(keyCode == CONTROL) {
+        piano = true;
+      }
+    }else {
+      if(keyCode == ALT) {
+        piano = true;
+      }
+    }
+  }
+  
+  public void noteOffEffects() {
+    if(key == ' ') {
+        octaveUp = false;
+      }
+      if(key == 'c') {
+        octaveDown = false;
+      }
+      if(key == '1') {
+        farte = false;
+      }
+      if(keyCode == ALT) {
+        piano = false;
+      }
+      
+      //println("velocity:"+ baseVel);
+      
+      pitchName = "";
+
   }
 
   public int autoModify(int a, int b, int c, int d) {
@@ -581,7 +602,7 @@ public class pc_keyboard3 extends PApplet {
     return d;
   }
 
-  public int setBlackKeys() {
+  public int getMinBlackKey() {
     int min;
     switch(key) {
       case '1':

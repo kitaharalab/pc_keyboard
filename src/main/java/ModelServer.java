@@ -47,9 +47,7 @@ public class ModelServer {
   private static SavedModelBundle model = SavedModelBundle.load(strPath, "serve");  
   
   public void predict() {
-    
     count++;
-        
     System.out.println(count);
         
     if(count > 1) {
@@ -68,13 +66,30 @@ public class ModelServer {
     //前の音のベロシティ
     float vel_float = prev_vel;
     
-    System.out.println("noteNum:" + noteNum_float);
-    System.out.println("interval:" + interval + " seconds");
-    System.out.println("div_noteNumber:" + div_noteNum);
-    System.out.println("prev_note_len:" + prev_note_len + " seconds");
-    System.out.println("prev_velcoity:" + vel_float);
+    printFeatures(noteNum_float, interval, div_noteNum, prev_note_len, vel_float);
+    
+    sortInput_matrix();
+                
+    makeFeatures(noteNum_float, interval, div_noteNum, prev_note_len, vel_float);
         
-    if(count == 1) { 
+    TFloat32 input_tensor = TFloat32.tensorOf(input_matrix);
+    
+    //モデルを用いて学習を行う
+    calcOutput(input_tensor);    
+    System.out.println("predicted");
+    prev_noteNum = noteNum_int;
+  }
+  
+  public void printFeatures(float noteNum, float interval, int div, float len, float vel) {
+    System.out.println("noteNum:" + noteNum);
+    System.out.println("interval:" + interval + " seconds");
+    System.out.println("div_noteNumber:" + div);
+    System.out.println("prev_note_len:" + len + " seconds");
+    System.out.println("prev_velcoity:" + vel);
+  }
+  
+  public void sortInput_matrix() {
+     if(count == 1) { 
       for(int j = 0; j < ax2; j++) {
         for(int k = 0; k < ax3; k++) {
           input_matrix.setFloat(0.0f, 0, j, k);
@@ -83,7 +98,6 @@ public class ModelServer {
     }
              
     //入力したデータをずらす
-    
     if(count > 1) {
       for(int i = 1; i < ax2; i++) {
         for(int j = 0; j < ax3; j++) {
@@ -91,27 +105,27 @@ public class ModelServer {
         }
       }
     }
-    
+
+  }
+  
+  public void makeFeatures(float noteNum, float interval, int div, float len, float vel) {
     FloatNdArray features = NdArrays.ofFloats(Shape.of(ax3));
       
-    features.setFloat(noteNum_float, 0);
+    features.setFloat(noteNum, 0);
     features.setFloat(interval, 1);
     features.setFloat(0.0f, 2);
-    features.setFloat(div_noteNum, 3);
+    features.setFloat(div, 3);
     features.setFloat(0.0f, 4);
     features.setFloat(0.0f, 5);
-    features.setFloat(prev_note_len, 6);
-    features.setFloat(vel_float, 7);
+    features.setFloat(len, 6);
+    features.setFloat(vel, 7);
     
     for(int i = 0; i < ax3; i++) {
       input_matrix.setFloat(features.getFloat(i), 0, ax2-1, i);
     }
-    
-    TFloat32 input_tensor = TFloat32.tensorOf(input_matrix);
-    
-        
-    
-    //モデルを用いて学習を行う    
+  }
+  
+  public void calcOutput(TFloat32 input_tensor) {
     output = (TFloat32) model.session()
         .runner()
         .feed("serving_default_lstm_input:0", input_tensor)
@@ -131,9 +145,6 @@ public class ModelServer {
     */
     
     output.close();
-    System.out.println("predicted");
-    prev_noteNum = noteNum_int;
-    
   }
   
   //ベロシティを取得する  
