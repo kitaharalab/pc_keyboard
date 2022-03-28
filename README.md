@@ -39,8 +39,6 @@ mvn archetype:create -DgroupId=com.example -DartifactId=ModelServer
 実行後、pom.xml、srcディレクトリ、testディレクトリが生成されます。
 
 # pom.xml
-現在編集中
-
 pom.xmlはプロジェクトの構成に関する情報をもつ重要なファイルです。
 
 新しいライブラリを入れる場合には、pom.xmlにライブラリの情報を記述することで、利用可能にします。
